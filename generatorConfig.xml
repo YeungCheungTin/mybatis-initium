@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>  
+    <context id="MySQLTable"  targetRuntime="MyBatis3">
+
+        <property name="author" value="CheungTinYeung"/>
+        <property name="autoDelimitKeywords" value="true"/>
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
+        <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
+
+        <commentGenerator>  
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection connectionURL="jdbc:mysql://localhost:3306/mbg_test?useUnicode=true&amp;characterEncoding=UTF-8"
+                        driverClass="com.mysql.jdbc.Driver" userId="root" password="root">
+        </jdbcConnection>
+
+        <javaTypeResolver>  
+            <property name="forceBigDecimals" value="false"/>  
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="com.xxx.persistence.po" targetProject="build">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <businessModelGenerator targetPackage="com.xxx.persistence.bo" targetProject="build">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+            <property name="generateDataService" value="true"/>
+            <property name="dataServicePackage" value="com.xxx.persistence.service"/>
+            <ignore name="id"/>
+            <ignore name="create_time"/>
+            <ignore name="update_time"/>
+        </businessModelGenerator>
+
+        <sqlMapGenerator targetPackage="com.xxx.persistence.dao" targetProject="build">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.xxx.persistence.dao" targetProject="build">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+        
+		<table tableName="t_biz" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <updateTime column="update_time"/>
+            <update>
+                <candidateKeys>
+                    <candidateKey>
+                        <column name="id"/>
+                    </candidateKey>
+                    <candidateKey>
+                        <column name="biz_name"/>
+                    </candidateKey>
+                </candidateKeys>
+            </update>
+            <!--<delete>
+                <candidateKeys>
+                    <candidateKey>
+                        <column name=""/>
+                    </candidateKey>
+                </candidateKeys>
+            </delete>-->
+        </table>
+
+    </context>  
+</generatorConfiguration>  
