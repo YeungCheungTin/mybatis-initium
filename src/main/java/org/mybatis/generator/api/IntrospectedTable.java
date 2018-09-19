@@ -1,5 +1,6 @@
 package org.mybatis.generator.api;
 
+import org.apache.commons.lang3.StringUtils;
 import org.mybatis.generator.config.BusinessModelGeneratorConfiguration;
 import org.mybatis.generator.config.CandidateKey;
 import org.mybatis.generator.config.Context;
@@ -575,10 +576,10 @@ public abstract class IntrospectedTable {
         setCountByExampleStatementId("countByExample");
         setDeleteByExampleStatementId("deleteByExample");
         setDeleteByPrimaryKeyStatementId("deleteByPrimaryKey");
-        setInsertStatementId("insert");
+        setInsertStatementId("save");
         setInsertSelectiveStatementId("insertSelective");
-        setQueryByCondition("queryByConditon");
-        setListByCondition("listByConditon");
+        setQueryByCondition("queryByCondition");
+        setListByCondition("listByCondition");
         setSelectAllStatementId("selectAll");
         setSelectByExampleStatementId("selectByExample");
         setSelectByExampleWithBLOBsStatementId("selectByExampleWithBLOBs");
@@ -892,6 +893,9 @@ public abstract class IntrospectedTable {
 
             if (context.getBusinessModelGeneratorConfiguration().isGenerateDataService()) {
                 String dataServicePackage = context.getBusinessModelGeneratorConfiguration().getDataServiePackage();
+                if (StringUtils.isBlank(dataServicePackage)) {
+                    dataServicePackage = context.getGlobalPackage() + ".service";
+                }
                 sb.setLength(0);
                 sb.append(dataServicePackage);
                 sb.append(".");

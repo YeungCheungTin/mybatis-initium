@@ -1,5 +1,6 @@
 package org.mybatis.generator.config.xml;
 
+import org.apache.commons.lang3.StringUtils;
 import org.mybatis.generator.config.BusinessModelGeneratorConfiguration;
 import org.mybatis.generator.config.CandidateKey;
 import org.mybatis.generator.config.ColumnOverride;
@@ -146,6 +147,8 @@ public class MyBatisGeneratorConfigurationParser {
                 parseProperty(context, childNode);
             } else if ("plugin".equals(childNode.getNodeName())) {
                 parsePlugin(context, childNode);
+            } else if ("globalPackage".equals(childNode.getNodeName())) {
+                parseGlobalPackage(context, childNode);
             } else if ("commentGenerator".equals(childNode.getNodeName())) {
                 parseCommentGenerator(context, childNode);
             } else if ("jdbcConnection".equals(childNode.getNodeName())) {
@@ -166,6 +169,16 @@ public class MyBatisGeneratorConfigurationParser {
         }
     }
 
+    private void parseGlobalPackage(Context context, Node globalPackageNode) {
+        Properties properties = parseAttributes(globalPackageNode);
+        String value = properties.getProperty("value");
+        if (StringUtils.isBlank(value)) {
+            context.setGlobalPackage(StringUtils.EMPTY);
+        } else {
+            context.setGlobalPackage(value);
+        }
+    }
+
     private void parseSqlMapGenerator(Context context, Node node) {
         SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration = new SqlMapGeneratorConfiguration();
 
@@ -173,6 +186,9 @@ public class MyBatisGeneratorConfigurationParser {
 
         Properties attributes = parseAttributes(node);
         String targetPackage = attributes.getProperty("targetPackage");
+        if (StringUtils.isBlank(targetPackage)) {
+            targetPackage = context.getGlobalPackage() + ".dao";
+        }
         String targetProject = attributes.getProperty("targetProject");
 
         sqlMapGeneratorConfiguration.setTargetPackage(targetPackage);
@@ -583,6 +599,9 @@ public class MyBatisGeneratorConfigurationParser {
 
         Properties attributes = parseAttributes(node);
         String targetPackage = attributes.getProperty("targetPackage");
+        if (StringUtils.isBlank(targetPackage)) {
+            targetPackage = context.getGlobalPackage() + ".po";
+        }
         String targetProject = attributes.getProperty("targetProject");
 
         javaModelGeneratorConfiguration.setTargetPackage(targetPackage);
@@ -609,6 +628,9 @@ public class MyBatisGeneratorConfigurationParser {
 
         Properties attributes = parseAttributes(node);
         String targetPackage = attributes.getProperty("targetPackage");
+        if (StringUtils.isBlank(targetPackage)) {
+            targetPackage = context.getGlobalPackage() + ".bo";
+        }
         String targetProject = attributes.getProperty("targetProject");
 
 
@@ -643,6 +665,9 @@ public class MyBatisGeneratorConfigurationParser {
         Properties attributes = parseAttributes(node);
         String type = attributes.getProperty("type");
         String targetPackage = attributes.getProperty("targetPackage");
+        if (StringUtils.isBlank(targetPackage)) {
+            targetPackage = context.getGlobalPackage() + ".dao";
+        }
         String targetProject = attributes.getProperty("targetProject");
         String implementationPackage = attributes.getProperty("implementationPackage");
 

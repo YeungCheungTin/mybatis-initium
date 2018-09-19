@@ -58,6 +58,10 @@ public class BaseDataServiceImplGenerator extends AbstractJavaGenerator {
         topLevelClass.addSuperInterface(dataServiceType);
         topLevelClass.addImportedType(dataServiceType);
 
+        // 引入bo、po
+        topLevelClass.addImportedType(this.getBOFullyQualifiedType());
+        topLevelClass.addImportedType(this.getPOFullyQualifiedType());
+
         // 注入dao
         Field daoField = this.buildDaoField();
         topLevelClass.addField(daoField);
@@ -168,6 +172,16 @@ public class BaseDataServiceImplGenerator extends AbstractJavaGenerator {
         return introspectedTable.getFullyQualifiedTable().getDomainObjectName().substring(1);
     }
 
+    /**
+     * 获取bo参数名
+     *
+     * @return bo参数名
+     */
+    private String getBOParamName() {
+        String boName = introspectedTable.getFullyQualifiedTable().getDomainObjectName().substring(1);
+        return String.valueOf(Character.toLowerCase(boName.charAt(0))) + boName.substring(1);
+    }
+
     private Method buildQueryByUniqueKeyMethod(TopLevelClass topLevelClass, List<IntrospectedColumn> primaryKeyColumns) {
         FullyQualifiedJavaType poFullyQualifiedType = this.getPOFullyQualifiedType();
         FullyQualifiedJavaType boFullyQualifiedType = this.getBOFullyQualifiedType();
@@ -229,12 +243,12 @@ public class BaseDataServiceImplGenerator extends AbstractJavaGenerator {
         // 添加@Override注解
         method.addAnnotation("@Override");
         // 设置参数
-        method.addParameter(new Parameter(boFullyQualifiedType, this.getBOName()));
+        method.addParameter(new Parameter(boFullyQualifiedType, this.getBOParamName()));
         // 设置方法体
-        String sb = "if (" + this.getBOName() + " == null) {\n" +
+        String sb = "if (" + this.getBOParamName() + " == null) {\n" +
                 TAB + TAB + TAB + "return false;\n" +
                 TAB + TAB + "}\n" +
-                TAB + TAB + "return " + this.getDaoParamName() + ".save(" + this.getBOName() + ".buildPO()) == 1;";
+                TAB + TAB + "return " + this.getDaoParamName() + ".save(" + this.getBOParamName() + ".buildPO()) == 1;";
         method.addBodyLine(sb);
         return method;
     }

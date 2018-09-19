@@ -73,6 +73,8 @@ public class Context extends PropertyHolder {
 
     private String author;
 
+    private String globalPackage;
+
     /**
      * Constructs a Context object.
      *
@@ -199,6 +201,14 @@ public class Context extends PropertyHolder {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public String getGlobalPackage() {
+        return globalPackage;
+    }
+
+    public void setGlobalPackage(String globalPackage) {
+        this.globalPackage = globalPackage;
     }
 
     public void setJavaClientGeneratorConfiguration(JavaClientGeneratorConfiguration javaClientGeneratorConfiguration) {

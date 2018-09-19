@@ -74,7 +74,7 @@ public class BusinessRecordGenerator extends AbstractJavaGenerator {
         serialVersionUID.setVisibility(JavaVisibility.PRIVATE);
         serialVersionUID.setType(new FullyQualifiedJavaType("long"));
         // 生成serialVersionUID的值
-        String randomNum = StringUtils.leftPad(String.valueOf(new Random().nextInt(1000000000)), 10, "0");
+        String randomNum = StringUtils.leftPad(String.valueOf(new Random().nextInt(100000000)), 9, "0");
         String serialVersionUidValue = String.valueOf(serializableType.hashCode()) + randomNum + "L";
         serialVersionUID.setInitializationString(serialVersionUidValue);
         topLevelClass.addField(serialVersionUID);

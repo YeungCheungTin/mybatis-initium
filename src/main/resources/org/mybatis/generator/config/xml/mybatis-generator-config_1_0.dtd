@@ -48,7 +48,7 @@
   The context element is used to describe a context for generating files, and the source
   tables.
 -->
-<!ELEMENT context (property*, plugin*, commentGenerator?, jdbcConnection, javaTypeResolver?,
+<!ELEMENT context (property*, plugin*, globalPackage*, commentGenerator?, jdbcConnection, javaTypeResolver?,
                          javaModelGenerator, businessModelGenerator?, sqlMapGenerator?, javaClientGenerator?, table+)>
 <!ATTLIST context id ID #REQUIRED
   defaultModelType CDATA #IMPLIED
@@ -85,6 +85,9 @@
   name CDATA #REQUIRED
   value CDATA #REQUIRED>
 
+<!ELEMENT globalPackage EMPTY>
+<!ATTLIST globalPackage value CDATA #REQUIRED>
+
 <!--
   The plugin element is used to define a plugin.
 -->
@@ -99,7 +102,7 @@
 -->
 <!ELEMENT javaModelGenerator (property*)>
 <!ATTLIST javaModelGenerator
-  targetPackage CDATA #REQUIRED
+  targetPackage CDATA #IMPLIED
   targetProject CDATA #REQUIRED>
 
 <!--
@@ -109,7 +112,7 @@
 -->
 <!ELEMENT businessModelGenerator (property*, ignore*)>
 <!ATTLIST businessModelGenerator
-        targetPackage CDATA #REQUIRED
+        targetPackage CDATA #IMPLIED
         targetProject CDATA #REQUIRED>
 
 <!--
@@ -129,7 +132,7 @@
 -->
 <!ELEMENT sqlMapGenerator (property*)>
 <!ATTLIST sqlMapGenerator
-  targetPackage CDATA #REQUIRED
+  targetPackage CDATA #IMPLIED
   targetProject CDATA #REQUIRED>
 
 <!--
@@ -141,7 +144,7 @@
 <!ELEMENT javaClientGenerator (property*)>
 <!ATTLIST javaClientGenerator
   type CDATA #REQUIRED
-  targetPackage CDATA #REQUIRED
+  targetPackage CDATA #IMPLIED
   targetProject CDATA #REQUIRED
   implementationPackage CDATA #IMPLIED>
 

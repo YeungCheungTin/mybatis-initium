@@ -1,6 +1,5 @@
 package org.mybatis.generator.config;
 
-import org.apache.commons.lang3.StringUtils;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
@@ -76,16 +75,7 @@ public class BusinessModelGeneratorConfiguration extends PropertyHolder {
 
     public boolean isGenerateDataService() {
         String generateDataService = getProperty("generateDataService");
-        Boolean config = Boolean.valueOf(generateDataService);
-        if (config) {
-            if (StringUtils.isNotBlank(getProperty("dataServicePackage"))) {
-                return true;
-            }
-            System.out.println("generateDataService 已配置为true, 请配置dataServicePackage, 方可生成dataService");
-            return false;
-        } else {
-            return false;
-        }
+        return Boolean.valueOf(generateDataService);
     }
 
     public String getDataServiePackage() {
